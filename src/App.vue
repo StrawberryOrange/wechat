@@ -1,11 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <a-button type="primary">qaq</a-button>
-    <router-view/>-->
     <a-layout id="components-layout-demo-custom-trigger">
       <a-layout-sider :trigger="null" collapsible v-model="collapsed">
         <div class="logo"/>
@@ -40,7 +34,7 @@
           </div>
           <!-- 登陆后的退出按钮 -->
           <div class="login" v-if="isLogin">
-            <a-button type="primary" @click="logout">退出</a-button>
+            <a-button @click="logout">退出</a-button>
           </div>
         </a-layout-header>
         <a-layout-content
@@ -49,6 +43,7 @@
           <!-- <router-view/> -->
           <userInfo v-if="showKey == 'index' && isLogin"/>
           <reply v-if="showKey == 'reply' && isLogin"/>
+          <wechatLogin v-if="showKey=='wechatLogin' &&isLogin"/>
           <noData v-if="!isLogin"/>
         </a-layout-content>
       </a-layout>
@@ -104,6 +99,7 @@
 // import home from "./views/Home.vue";
 import userInfo from "./components/userInfo";
 import reply from "./components/reply";
+import wechatLogin from "./components/wechatLogin";
 import noData from "./components/noDate";
 export default {
   data() {
@@ -131,7 +127,8 @@ export default {
   components: {
     noData,
     userInfo,
-    reply
+    reply,
+    wechatLogin
   },
   methods: {
     chooseIndex: function(item) {
@@ -200,8 +197,8 @@ export default {
 };
 </script>
 
-
 <style>
+@import url("//at.alicdn.com/t/font_1217929_q6sty5r3nu.css");
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;
@@ -219,27 +216,29 @@ export default {
   background: rgba(255, 255, 255, 0.2);
   margin: 16px;
 }
-/* #app {
-  font-family: "Avenir", Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-} */
 
 #nav a.router-link-exact-active {
   color: #42b983;
 }
 
-/* .login {
-  position: absolute;
-} */
+.card {
+  border-radius: 6px;
+  box-shadow: 0 0 10px rgba(151, 151, 151, 0.3);
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+.column-center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.row-center {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
 </style>

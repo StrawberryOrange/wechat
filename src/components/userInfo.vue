@@ -111,6 +111,9 @@ export default {
     setInfo: function() {
       this.$message.info("还没做好呢，急毛线");
     }
+  },
+  mounted: function() {
+    console.log(this.mixin);
   }
 };
 </script>

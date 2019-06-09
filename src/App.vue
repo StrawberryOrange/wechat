@@ -133,7 +133,7 @@ export default {
   methods: {
     chooseIndex: function(item) {
       this.showKey = item;
-      console.log(this.showKey);
+      // console.log(this.showKey);
     },
     showLog: function() {
       this.logVisible = true;

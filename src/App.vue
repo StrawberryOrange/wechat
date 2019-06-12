@@ -133,7 +133,7 @@ export default {
   methods: {
     chooseIndex: function(item) {
       this.showKey = item;
-      console.log(this.showKey);
+      // console.log(this.showKey);
     },
     showLog: function() {
       this.logVisible = true;
@@ -193,6 +193,11 @@ export default {
     handleCancel: function(e) {
       this.logVisible = false;
     }
+  },
+  mounted: function() {
+    this.ajax({
+      url: "http://127.0.0.1:8000/account/register"
+    });
   }
 };
 </script>

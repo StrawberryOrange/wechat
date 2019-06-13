@@ -32,9 +32,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ### 接口文档
 
-~~基地址  `dir:127.0.0.1:8000/`~~
+- ~~基地址  `dir:127.0.0.1:8000/`~~
 
-基地址 `dir: 129.28.101.84/`
+- 基地址 `dir: 129.28.101.84/`
 
 > 暂未加入csrf_token验证
 
@@ -47,7 +47,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 >错误信息写在返回message里，已声明可以不用添加
 
 1. 用户注册
-状态码声明：
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -70,7 +69,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     ```
 
 2. 用户登录
-状态码声明：
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -93,8 +91,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }    
     ```
 
-3. 用户退出
-状态码声明：
+1. 用户退出
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -112,8 +109,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }
     ```
 
-4. 用户回复数据
-状态码声明：
+1. 用户回复数据
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -187,6 +183,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }
     ```
 7.  修改回复
+
 同添加回复
 
 | 状态码 | 内容 |
@@ -210,7 +207,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }
     ```
 
-8. 微信二维码地址
+1. 微信二维码地址
 
 | 状态码 | 内容 |
 | :-----: | :----: |

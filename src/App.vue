@@ -187,7 +187,7 @@ export default {
         data: {
           username: self.regUsername,
           password: self.regPassword,
-          last_name: self.regEmail
+          last_name: 2
         },
         success: function(res) {
           console.log("zhucechengong");

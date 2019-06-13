@@ -7,7 +7,7 @@ const mixin = {
             console.log('qaq')
         },
         ajax: function (options) {
-            var headers = {}
+            var headers = options.headers || {}
             var method = options.method || options.type || 'GET'
             var data = options.data || null
             var url = options.url || ''
@@ -18,11 +18,17 @@ const mixin = {
                     index++
                 }
             }
+            if (headers == {} && method == "POST") {
+                header = {
+                    "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+                }
+            }
+            console.log(options)
             axios({
                 method: method,
                 url: url,
                 asyn: options.asyn || true,
-                headers: options.headers || headers,
+                headers: headers,
                 data: data
             })
                 .then(function (res) {

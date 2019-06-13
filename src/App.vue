@@ -71,10 +71,10 @@
         <!-- <a-button key="back" @click="handleCancel">Return</a-button> -->
         <a-button key="submit" type="primary" :loading="regloading" @click="regSubmit">注册</a-button>
       </template>
-      <a-input placeholder="请输入用户id" v-model="regUserId" style="margin:10px 0;">
+      <!-- <a-input placeholder="请输入用户id" v-model="regUserId" style="margin:10px 0;">
         <a-icon slot="prefix" type="bulb"/>
         <a-icon v-if="regUserId" slot="suffix" type="close-circle" @click="empty('reg',1)"/>
-      </a-input>
+      </a-input>-->
       <a-input placeholder="请输入用户名" v-model="regUsername" style="margin:10px 0;">
         <a-icon slot="prefix" type="user"/>
         <a-icon v-if="regUsername" slot="suffix" type="close-circle" @click="empty('reg',2)"/>
@@ -83,14 +83,14 @@
         <a-icon slot="prefix" type="key"/>
         <a-icon v-if="regPassword" slot="suffix" type="close-circle" @click="empty('reg',3)"/>
       </a-input>
-      <a-input placeholder="请确认密码" v-model="regPassword2" type="password" style="margin:10px 0;">
+      <!-- <a-input placeholder="请确认密码" v-model="regPassword2" type="password" style="margin:10px 0;">
         <a-icon slot="prefix" type="key"/>
         <a-icon v-if="regPassword2" slot="suffix" type="close-circle" @click="empty('reg',4)"/>
       </a-input>
       <a-input placeholder="请输入用户邮箱" v-model="regEmail" style="margin:10px 0;">
         <a-icon slot="prefix" type="mail"/>
         <a-icon v-if="regEmail" slot="suffix" type="close-circle" @click="empty('reg',5)"/>
-      </a-input>
+      </a-input>-->
     </a-modal>
   </div>
 </template>
@@ -105,7 +105,7 @@ export default {
   data() {
     return {
       // 登录态
-      isLogin: true,
+      isLogin: false,
 
       collapsed: false,
       showKey: "index",
@@ -195,18 +195,35 @@ export default {
         }
       });
 
-      setTimeout(() => {
-        this.regVisible = false;
-        this.regloading = false;
-      }, 1000);
+      // setTimeout(() => {
+      //   this.regVisible = false;
+      //   this.regloading = false;
+      // }, 1000);
     },
     logSubmit: function(e) {
       this.logloading = true;
-      setTimeout(() => {
-        this.logVisible = false;
-        this.logloading = false;
-        this.isLogin = true;
-      }, 1000);
+      var self = this;
+      this.ajax({
+        url: self.store.INTERFACE.LOGIN,
+        method: "POST",
+        header: {
+          "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+        },
+        data: {
+          username: self.logUsername,
+          password: self.logPassword
+        },
+        success: function(res) {
+          console.log("zhucechengong");
+          console.log(res);
+        }
+      });
+
+      // setTimeout(() => {
+      //   this.logVisible = false;
+      //   this.logloading = false;
+      //   this.isLogin = true;
+      // }, 1000);
     },
     logout: function() {
       this.isLogin = false;

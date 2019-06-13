@@ -48,6 +48,9 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 1. 用户注册
 状态码声明：
+
+| 状态码 | 内容 |
+| :-----: | :----: |
 | 200 | 成功注册 |
 | 0 | 用户未关注 |
 | -2 | 其他错误 |

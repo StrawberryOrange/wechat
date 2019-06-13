@@ -22,7 +22,7 @@ const mixin = {
                 method: method,
                 url: url,
                 asyn: options.asyn || true,
-                headers: headers,
+                headers: options.headers || headers,
                 data: data
             })
                 .then(function (res) {
@@ -32,6 +32,7 @@ const mixin = {
                     }
                 })
                 .catch(function (xhr) {
+                    console.log(xhr)
                     console.log('出现错误')
                 })
 

@@ -113,9 +113,11 @@ export default {
       logloading: false,
       regVisible: false,
       regloading: false,
+
       // 登录用户名，密码
       logUsername: "",
       logPassword: "",
+
       // 注册用户名，id，密码……
       regUserId: "",
       regUsername: "",
@@ -174,6 +176,25 @@ export default {
     },
     regSubmit: function(e) {
       this.regloading = true;
+
+      var self = this;
+      this.ajax({
+        url: self.store.INTERFACE.REGISTER,
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+        },
+        data: {
+          username: self.regUsername,
+          password: self.regPassword,
+          last_name: self.regEmail
+        },
+        success: function(res) {
+          console.log("zhucechengong");
+          console.log(res);
+        }
+      });
+
       setTimeout(() => {
         this.regVisible = false;
         this.regloading = false;
@@ -195,9 +216,7 @@ export default {
     }
   },
   mounted: function() {
-    this.ajax({
-      url: "http://127.0.0.1:8000/account/register"
-    });
+    // console.log(this.store.INTERFACE.REGISTER);
   }
 };
 </script>

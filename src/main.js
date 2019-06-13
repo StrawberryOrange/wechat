@@ -4,9 +4,12 @@ import router from './router'
 import Antd from 'ant-design-vue'
 import "ant-design-vue/dist/antd.css"
 import global from './global'
+import store from "./store"
 
 Vue.use(Antd)
 Vue.mixin(global)
+
+Vue.prototype.store = store
 
 Vue.config.productionTip = false
 

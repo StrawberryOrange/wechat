@@ -91,7 +91,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }    
     ```
 
-1. 用户退出
+3. 用户退出
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -109,7 +109,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }
     ```
 
-1. 用户回复数据
+4. 用户回复数据
 
 | 状态码 | 内容 |
 | :-----: | :----: |
@@ -150,7 +150,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 | -2 | '收到内容'有重复，请检查 |
 | -3 | 其他错误 |
 
-    ```json
+    ```
     url: dir + mongodb/add?id=userid
     methods: POST,
     body:{
@@ -174,7 +174,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 | -2 | 主键不存在 |
 | -3 | 其他错误 |
 
-    ```json
+    ```
     url: dir + mongodb/delete?id=userid&key=主键
     methods: DELETE
     result:{
@@ -207,7 +207,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
     }
     ```
 
-1. 微信二维码地址
+8. 微信二维码地址
 
 | 状态码 | 内容 |
 | :-----: | :----: |

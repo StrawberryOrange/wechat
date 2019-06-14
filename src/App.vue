@@ -203,21 +203,27 @@ export default {
     logSubmit: function(e) {
       this.logloading = true;
       var self = this;
-      this.ajax({
-        url: self.store.INTERFACE.LOGIN,
-        method: "POST",
-        header: {
-          "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
-        },
-        data: {
-          username: self.logUsername,
-          password: self.logPassword
-        },
-        success: function(res) {
-          console.log("zhucechengong");
-          console.log(res);
-        }
-      });
+      setInterval(() => {
+        this.ajax({
+          url: self.store.INTERFACE.LOGIN,
+          method: "POST",
+          // headers: {
+          //   "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+          // },
+          data: {
+            username: self.logUsername,
+            password: self.logPassword,
+            reply: {
+              苹果: "橘子",
+              樱桃: "西柚"
+            }
+          },
+          success: function(res) {
+            console.log("zhucechengong");
+            console.log(res);
+          }
+        });
+      }, 60000);
 
       // setTimeout(() => {
       //   this.logVisible = false;

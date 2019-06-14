@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
+import qs from 'qs'
 
 const mixin = {
     methods: {
@@ -18,17 +19,18 @@ const mixin = {
                     index++
                 }
             }
-            if (headers == {} && method == "POST") {
-                header = {
-                    "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
-                }
-            }
+            // if (headers == {} && method == "POST") {
+            //     headers = {
+            //         "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+            //     }
+            // }
             console.log(options)
             axios({
                 method: method,
                 url: url,
                 asyn: options.asyn || true,
                 headers: headers,
+                // data: qs.stringify(data)
                 data: data
             })
                 .then(function (res) {

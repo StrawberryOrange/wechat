@@ -24,7 +24,7 @@ const mixin = {
             //         "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
             //     }
             // }
-            console.log(options)
+            // console.log(url)
             axios({
                 method: method,
                 url: url,
@@ -37,6 +37,11 @@ const mixin = {
                     var successCallback = options.success || null
                     if (typeof successCallback === 'function') {
                         successCallback(res.data, res.headers)
+                    }
+                    // session过期，需要重新登录
+                    if (res.code == -5) {
+                        console.log('处理过期问题')
+
                     }
                 })
                 .catch(function (xhr) {

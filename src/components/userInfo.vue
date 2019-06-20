@@ -23,34 +23,41 @@
             src="https://m.360buyimg.com/pop/jfs/t24505/175/1750670450/14994/a3c2d55f/5b697897N21140e81.jpg"
           />
           <div class="column-center" style="align-items:flex-start;flex-grow:1;">
-            <span style="font-size:22px;color:#333">这是一个id</span>
-            <span>这是一个昵称</span>
+            <span style="font-size:22px;color:#333">{{userInfo.id}}</span>
+            <span>{{userInfo.name}}</span>
           </div>
         </div>
-        <div class="info-content" style="align-self:flex-start;margin-left:20px;">签名：{{signature}}</div>
+        <div
+          class="info-content"
+          style="align-self:flex-start;margin-left:20px;"
+        >签名：{{userInfo.signature}}</div>
       </div>
       <div class="right" style="width:60%">
         <div class="info-content signature">
           <span class="info-content-title">openid：</span>
-          {{openid}}
+          {{userInfo.openid}}
         </div>
         <div class="info-content signature">
           <span class="info-content-title">微信名：</span>
-          {{wechatid}}
+          {{userInfo.wechatid}}
         </div>
         <div class="info-content signature">
           <span class="info-content-title">邮箱：</span>
-          {{email}}
+          {{userInfo.email}}
         </div>
         <div class="info-content signature">
           <span class="info-content-title">电话：</span>
-          {{phone}}
+          {{userInfo.phone}}
         </div>
         <div class="info-content signature">
           <span class="info-content-title" style="line-height:24px;">性别：</span>
-          <a v-if="gender=='male'" class="iconfont gender icon-nan" style="background:#1296db"></a>
           <a
-            v-if="gender=='female'"
+            v-if="userInfo.gender=='male'"
+            class="iconfont gender icon-nan"
+            style="background:#1296db"
+          ></a>
+          <a
+            v-if="userInfo.gender=='female'"
             class="iconfont gender column-center row-center icon-nv"
             style="background:rgb(238,155,155)"
           ></a>
@@ -67,7 +74,7 @@
         <div class="tip"></div>
         <div class="text">
           账户资产：
-          <div style="font-size:42px;margin-top:5px;">￥{{pay}}</div>
+          <div style="font-size:42px;margin-top:5px;">￥{{userInfo.pay}}</div>
         </div>
         <i class="iconfont icon-jinlingyingcaiwangtubiao62 first"></i>
         <i class="iconfont icon-jinlingyingcaiwangtubiao62 second"></i>
@@ -80,7 +87,7 @@
         <div class="tip"></div>
         <div class="text">
           已处理会话：
-          <div style="font-size:42px;margin-top:5px;">{{time}}次</div>
+          <div style="font-size:42px;margin-top:5px;">{{userInfo.time}}次</div>
         </div>
         <i class="iconfont icon-cishu first"></i>
         <i class="iconfont icon-cishu second"></i>
@@ -97,23 +104,47 @@ export default {
   },
   data: function() {
     return {
-      signature: "这个人很勤快，什么都拿走了",
-      openid: "奇奇怪怪的东东",
-      wechatid: "微信id",
-      email: "123@321.com",
-      phone: "12332112345",
-      gender: "male",
-      pay: -2,
-      time: 310
+      userInfo: {
+        // signature: "这个人很勤快，什么都拿走了",
+        // openid: "奇奇怪怪的东东",
+        // wechatid: "微信id",
+        // email: "123@321.com",
+        // phone: "12332112345",
+        // gender: "male",
+        // pay: -2,
+        // time: 310
+        id: "--",
+        name: "--",
+        signature: "--",
+        openid: "--",
+        wechatid: "--",
+        email: "--",
+        phone: "--",
+        gender: "male",
+        pay: -2,
+        time: 310
+      }
     };
   },
   methods: {
     setInfo: function() {
       this.$message.info("还没做好呢，急毛线");
+    },
+    getUserInfo: function() {
+      var self = this;
+      this.ajax({
+        url: self.store.INTERFACE.ACCOUNT_PROFILE,
+        method: "GET",
+        success: function(res) {
+          if (res.code == 200) {
+            console.log(res);
+          }
+        }
+      });
     }
   },
   mounted: function() {
-    console.log(this.mixin);
+    this.getUserInfo();
   }
 };
 </script>

@@ -50,7 +50,7 @@
     </a-layout>
 
     <!-- 登录弹出窗体 -->
-    <a-modal v-model="logVisible" title="用户登录" onOk="logSubmit">
+    <a-modal title="用户登录" onOk="logSubmit" :visible="logVisible">
       <template slot="footer">
         <!-- <a-button key="back" @click="handleCancel">Return</a-button> -->
         <a-button key="submit" type="primary" :loading="logloading" @click="logSubmit">登录</a-button>
@@ -66,15 +66,15 @@
     </a-modal>
 
     <!-- 注册弹出窗体 -->
-    <a-modal v-model="regVisible" title="用户注册" onOk="regSubmit">
+    <a-modal title="用户注册" onOk="regSubmit" :visible="regVisible">
       <template slot="footer">
         <!-- <a-button key="back" @click="handleCancel">Return</a-button> -->
         <a-button key="submit" type="primary" :loading="regloading" @click="regSubmit">注册</a-button>
       </template>
-      <!-- <a-input placeholder="请输入用户id" v-model="regUserId" style="margin:10px 0;">
+      <a-input placeholder="请输入lastname" v-model="regUserId" style="margin:10px 0;">
         <a-icon slot="prefix" type="bulb"/>
         <a-icon v-if="regUserId" slot="suffix" type="close-circle" @click="empty('reg',1)"/>
-      </a-input>-->
+      </a-input>
       <a-input placeholder="请输入用户名" v-model="regUsername" style="margin:10px 0;">
         <a-icon slot="prefix" type="user"/>
         <a-icon v-if="regUsername" slot="suffix" type="close-circle" @click="empty('reg',2)"/>
@@ -96,7 +96,6 @@
 </template>
 
 <script>
-// import home from "./views/Home.vue";
 import userInfo from "./components/userInfo";
 import reply from "./components/reply";
 import wechatLogin from "./components/wechatLogin";
@@ -187,11 +186,14 @@ export default {
         data: {
           username: self.regUsername,
           password: self.regPassword,
-          last_name: 2
+          last_name: self.regUserId
         },
         success: function(res) {
-          console.log("zhucechengong");
-          console.log(res);
+          if (res.code == 200) {
+            self.$message.info("注册成功，请登录", 5);
+          }
+          // console.log("zhucechengong");
+          // console.log(res);
         }
       });
 
@@ -203,39 +205,62 @@ export default {
     logSubmit: function(e) {
       this.logloading = true;
       var self = this;
-      setInterval(() => {
-        this.ajax({
-          url: self.store.INTERFACE.LOGIN,
-          method: "POST",
-          // headers: {
-          //   "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
-          // },
-          data: {
-            username: self.logUsername,
-            password: self.logPassword,
-            reply: {
-              苹果: "橘子",
-              樱桃: "西柚"
-            }
-          },
-          success: function(res) {
-            console.log("zhucechengong");
-            console.log(res);
+      this.ajax({
+        url: self.store.INTERFACE.LOGIN,
+        method: "POST",
+        // headers: {
+        //   "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+        // },
+        data: {
+          username: self.logUsername,
+          password: self.logPassword,
+          reply: {
+            苹果: "橘子",
+            樱桃: "西柚"
           }
-        });
-      }, 60000);
-
-      // setTimeout(() => {
-      //   this.logVisible = false;
-      //   this.logloading = false;
-      //   this.isLogin = true;
-      // }, 1000);
+        },
+        success: function(res) {
+          if (res.code == 200) {
+            self.isLogin = true;
+            // // console.log(res.headers["set-cookie"]);
+            // let allCookies = document.cookie;
+            // console.log(allCookies);
+            self.handleCancel();
+            // setTimeout(() => {
+            // self.getUserInfo();
+            // }, 200);
+          }
+        }
+      });
     },
     logout: function() {
-      this.isLogin = false;
+      var self = this;
+      this.ajax({
+        url: self.store.INTERFACE.LOGOUT,
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
+        },
+        // data: {
+        //   username: self.logUsername,
+        //   password: self.logPassword,
+        //   reply: {
+        //     苹果: "橘子",
+        //     樱桃: "西柚"
+        //   }
+        // },
+        success: function(res) {
+          if (res.code == 200) {
+            self.isLogin = false;
+          }
+          // console.log("zhucechengong");
+          // console.log(res);
+        }
+      });
     },
     handleCancel: function(e) {
       this.logVisible = false;
+      this.regVisible = false;
     }
   },
   mounted: function() {
@@ -245,7 +270,7 @@ export default {
 </script>
 
 <style>
-@import url("//at.alicdn.com/t/font_1217929_q6sty5r3nu.css");
+@import url("//at.alicdn.com/t/font_1217929_3hyf9d2dwgm.css");
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;

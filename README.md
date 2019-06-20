@@ -31,7 +31,7 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 add githubEmial test
 
 
-### 接口文档
+### 接口文档（弃用）
 
 - ~~基地址  `dir:127.0.0.1:8000/`~~
 

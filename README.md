@@ -1,4 +1,6 @@
-# wechat
+## 1.wechat
+
+***该项目仅为前端实现，后端服务器采用django实现，未开源
 
 ## Project setup
 ```
@@ -31,356 +33,281 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 add githubEmial test
 
 
-### 接口文档（弃用）
+## 2.接口文档
+http://www.yangp1205.cn/34/
 
-- ~~基地址  `dir:127.0.0.1:8000/`~~
+**1.PATH = 129.28.101.84(测试端口8000）**
+*每次post请求都需要带csrf_token参数（后期），除登陆注册外，其他接口都需要登陆访问，携带有有效都session信息*
+**2.统一状态码**
 
-- 基地址 `dir: 129.28.101.84/`
+| code | message |
+|------|---------|
+| 200 | ok |
+| 0 | 未知错误 |
+| -1 | 用户名已存在 |
+| -2 | 用户名已存在 |
+| -3 | 参数错误 |
+| -4 | 用户名或密码错误 |
+| -5 | 用户不匹配 |
+| -6 | 验证码已使用，请检查是否正确，或通过微信公众号联系后台管理 |
 
-> 暂未加入csrf_token验证
+### account部分
 
----
+1.用户注册
 
-> 统一使用code:200作为成功标志，且除去token验证失败以外（尚未添加），其他http请求状态码均为200
-
----
-
->错误信息写在返回message里，已声明可以不用添加
-
-1. 用户注册
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 成功注册 |
-| -1 | 用户已存在 |
-| -2 | 其他错误 |
-
-    ```json
-    url: dir + account/register
+```javascript
+    url:PATH/account/register
     methods: POST
+    params:None
     body:{
         "username":"username",
         "password":"pwd",
-        "last_name":"1",
+        "last_name":"1", 这个参数很重要，需要和公众号项目同时使用，在注册时需要关注关注公众号，生成last_name，接口测试时可自行配置
     }
-    success_result:{
-        "code":200,
-        "message":"ok"
-    }
-    ```
-
-2. 用户登录
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 成功登录 |
-| -1 | 暂定 |
-| -2 | 密码错误 |
-| -3 | 用户名不存在 |
-
-    ```json
-    url: dir + account/login
-    methods: POST
-    body:{
-        "csrf_token":"csrf",
-        "username":"username",
-        "password":"pwd"
-    }
-    success_result:{
-        "code":200,
-        "message":"ok"
-    }    
-    ```
-
-3. 用户退出
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 成功退出 |
-| -1 | 状态不允许 |
-| -2 | 其他错误 |
-
-    ```json
-    url: dir + account/logout
-    methods: GET
-    params:None
-    success_result:{
-        "code":200,
-        "message":"ok"
-    }
-    ```
-
-4. 用户回复数据
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 获取成功 |
-| -1 | 用户不存在 |
-| -2 | 其他错误 |
-
-    ```json
-    url: dir + mongodb/show?id=userid
-    methods: GET
-    success_return:{
-        code:200,
-        message:'ok'
-        data:{
-            "主键1": {
-                "收到内容": "回复内容"
-            },
-            "主键2": {
-                "收到内容": "回复内容"
-            },
-            "3": {
-                "苹果": "梨子"
-            }
+    response:{
+        success_result:{
+            "code":200,
+            "message":"ok"
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
+        err_result:{
+            "code":-1,
+            "message":"用户名已存在",
+        }
+        err_result:{
+            "code":-3,
+            "message":"参数错误",
+        }
+        err_result:{
+            "code":-2,
+            "message":"无效验证码",
+        }
+        err_result:{
+            "code":-6,
+            "message":"验证码已使用，请检查是否正确，或通过微信公众联系后台管理",
         }
     }
-    error_return:{
-        code:-1,
-        message:'用户不存在'
-    }
-    ```
 
-4、5、6、7公用一套状态码
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 获取成功 |
-| -5 | 用户不匹配（删除） |
-| 0 | 未知错误 |
-4. 用户回复数据查看
-    ```json
-    url:129.28.101.84/database/show
-    methods: GET
-    params:none
-    success_return:{
-        
-    "主键1": {
-        "收到内容": "回复内容"
-    },
-    "主键2": {
-        "收到内容": "回复内容"
-    }
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-5. 添加回复
-    ```json
-    url:129.28.101.84/database/add
+```
+
+2.用户登录
+
+```javascript
+    url:PATH/account/login
     methods: POST
-    body:{
-        "收到内容":"回复内容",
-        "收到内容":"回复内容",
-        "收到内容":"回复内容",
-    }
-    sussecc_return:{
-        "code":200,
-        "message":"ok",
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-6. 删除回复
-    ```json
-    url:129.28.101.84/database/delete/?id=2123
-    methods: GET
-    params:n//删除回复的主键
-    sussecc_return:{
-        "code":200,
-        "message":"ok",
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-7.  修改回复
-    ```json
-    url:129.28.101.84/database/update/?id=n
-    methods: post
-    params:n//删除回复的主键
-    body:{
-        "new回复":"new收到",
-        
-    }
-    sussecc_return:{
-        "code":200,
-        "message":"ok",
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-5. 添加回复
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 更新成功 |
-| -1 | 状态不允许 |
-| -2 | '收到内容'有重复，请检查 |
-| -3 | 其他错误 |
-
-    ```
-    url: dir + mongodb/add?id=userid
-    methods: POST,
-    body:{
-        "收到内容":"回复内容",
-        "收到内容":"回复内容",
-        "苹果":"樱桃",
-    }
-    sussecc_return:{
-        "code":200,
-        "message":"ok",
-    }
-    ```
-
-
-6. 删除回复
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 删除成功 |
-| -1 | 状态不允许 |
-| -2 | 主键不存在 |
-| -3 | 其他错误 |
-
-    ```
-    url: dir + mongodb/delete?id=userid&key=主键
-    methods: DELETE
-    result:{
-        "code":200,
-        "message":"ok"
-    }
-    ```
-
-
-8. 微信二维码地址
-
-| 状态码 | 内容 |
-| :-----: | :----: |
-| 200 | 获取成功 |
-| -1 | 账户余额不足 |
-| -2 | 正在生成 |
-| -3 | 其他错误 |
-
-    ```json
-    url: dir + wechat/testlogin?id=userid
-    methods: GET
-    sussecc_return:{
-        "code":1,
-        "pid":"pid" // 静态文件地址/static/qrimages/pid.png" 
-    }
-    ```
-
-
-
-# 微信回复助手项目
-
-## 1. 项目主体
-
-1. 测试服务器
-    - 腾讯云服务器IP：129.28.101.84 
-    - ssh私钥登录，ssh_port:22
-2. 测试端口8000
-3. 开发环境：ubuntu16.04+nginx+uwsgi+django2.1+Vue.js+itchat+MySQL(测试阶段使用sqlite)
-4. GitHub分支定义
-
-   | branch | 定义 |
-   | - | - |
-   | master | 稳定版,用于上线使用 |
-   | development | 后端开发测试项目 |
-   | vuejs | 前端vue项目 |
-
-
-## 2. 后端API接口说明
-每次post请求都需要带csrf_token参数（后期）
-除account接口外，其他接口都需要登陆访问，携带有有效都session信息
-- _状态码说明_
- 
-| code | message |
-|-|-|
-| 200 | 成功 |
-| 1 | 数据内容 |
-| 0 | 未知错误 |
-| -1 | 用户未关注公众号 |
-| -2 | 用户名被使用 |
-| -3 | 用户名或密码错误 |
-| -4 | 参数错误 |
-
-
-1. 用户注册
-    ```json
-    url:129.28.101.84/account/register
-    methods: POST
-    body:{
-        
-        
-        "username":"username",
-        "password":"pwd",
-        "last_name":"1", //这个参数很重要，需要和公众号项目同时使用，在注册时需要关注关注公众号，生成last_name，接口测试时可自行配置
-    }
-    success_result:{
-        "code":200,
-        "message":"ok"
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-2. 用户登录
-    ```json
-    url:129.28.101.84account/login
-    methods: POST
+    params:None
     body:{
         "username":"username",
         "password":"pwd"
     }
-    success_result:{
-        "code":200,
-        "message":"ok"
+    response:{
+        success_result:{
+            "code":200,
+            "message":"ok"
+        }
+        err_result:{
+            "code":-3,
+            "message":"参数错误"
+        }
+        err_result:{
+            "code":-4,
+            "message":"用户名或密码错误",
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
     }
-    err3_result:{
-        "code":-3,
-        "message":"invalid login"
-    }
-    err0_result:{
-        "code":0,
-        "message":"unknow error",
-    }
-    ```
-3. 用户退出
-    ```json
-    url:129.28.101.84/account/logout
+
+```
+
+3.用户退出
+
+```javascript
+    url:PATH/account/logout
     methods: GET
     params:None
-    success_result:{
-        "code":200,
-        "message":"ok"
+    response:{
+        success_result:{
+            "code":200,
+            "message":"ok"
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误"
+        }
     }
-    err0_result:{
-        "code":0,
-        "message":"unknow error"
+
+```
+
+4.用户修改密码
+
+```javascript
+    url : PATH/account/changepwd
+    methods:POST
+    params:None
+    body:{
+        "username":"username",
+        "password":"pwd",
+        "newpassword":"newpwd",
     }
-    ```
+    respomse:{
+        success_result:{
+            "code":200,
+            "message":"ok"
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误"
+        }
+        err_result:{
+            "code":-4,
+            "message":"用户名或密码错误",
+        }
+    }
 
+```
 
-8. 微信二维码地址
-    ```json
-    url:129.28.101.84/wechat/testlogin
+### 回复内容部分
+
+1.用户回复数据查看
+
+```javascript
+    url:PATH/database/show
+    methods: GET
+    params:none
+    body:None
+    response:{
+        success_return:{          
+            "code": 200,
+            "message": "ok",
+            "data": [
+                {
+                    "id": 1,
+                    "receive": "更新",
+                    "response": "测试"
+                },
+                {
+                    "id": 2,
+                    "receive": "图标",
+                    "response": "不能使用苹果输入中的图标，真的吗？"
+                },
+                {
+                    "id": 3,
+                    "receive": "苹果",
+                    "response": "橘子"
+                },
+                {
+                    "id": 4,
+                    "receive": "添加",
+                    "response": "测试"
+                }     
+            ]
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
+    }
+
+```
+
+2.添加回复
+
+```javascript
+    url:PATH/database/add
+    methods: POST
+    params:None
+    body:{
+        "request":"橘子",
+        "response":"苹果"
+    }
+    response:{
+        sussecc_return:{
+            "code":200,
+            "message":"ok",
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
+    }
+    
+
+```
+
+3.删除回复
+
+```javascript
+    url:PATH/database/delete/?id=n
+    methods: GET
+    params:n  //删除内容的主键id
+    body:None
+    response:{
+        sussecc_return:{
+            "code":200,
+            "message":"ok",
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
+        err_result:{
+            "code":-5,
+            "message":"用户不匹配",
+        }
+    }
+
+```
+
+4.修改回复
+
+```javascript
+    url:PATH/database/update/?id=n
+    methods: POST
+    params:n  //修改内容的主键id
+    body:{
+        "request":"修改",
+        "response":"测试"
+    }
+    response:{
+        sussecc_return:{
+            "code":200,
+            "message":"ok",
+        }
+        err_result:{
+            "code":0,
+            "message":"未知错误",
+        }
+        err_result:{
+            "code":-5,
+            "message":"用户不匹配",
+        }
+    }
+    
+
+```
+
+### 个人微信登陆部分
+
+1.微信二维码地址获取
+
+```javascript
+    url:PATH/wechat/testlogin
     methods: GET
     params:None
-    return:{
-        "code":200,
-        "pid":"pid" // 静态文件地址/static/qrimages/pid.png" 
+    body:None
+    response:{
+        sussecc_return:{
+            "code":200,
+            "pid":"pid" // 静态文件地址/static/qrimages/pid.png" 
+        }
     }
-    ```
+
+```
 
 ## 3.开发进度
 

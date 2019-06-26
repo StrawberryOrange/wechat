@@ -92,7 +92,7 @@ export default {
       });
     },
     remove: function(item) {
-      console.log(item);
+      // console.log(item);
       // this.list.splice(index, 1);
       var self = this;
       this.ajax({
@@ -100,6 +100,7 @@ export default {
         method: "GET",
         success: function(res) {
           if (res.code == 200) {
+            self.$message.success("删除成功", 5);
             self.show();
           }
         }
@@ -107,7 +108,6 @@ export default {
     },
     show: function() {
       var self = this;
-      console.log("showfunction");
       this.ajax({
         url: self.store.INTERFACE.SHOW,
         method: "GET",
@@ -122,7 +122,7 @@ export default {
     },
     save: function(item) {
       var self = this;
-      console.log(item);
+      // console.log(item);
       if (item.id == -1) {
         this.ajax({
           url: self.store.INTERFACE.ADD,
@@ -133,6 +133,7 @@ export default {
           },
           success: function(res) {
             if (res.code == 200) {
+              self.$message.success("添加成功", 5);
               console.log(res);
               self.show();
               // self.list = res.data;
@@ -151,23 +152,14 @@ export default {
           success: function(res) {
             if (res.code == 200) {
               self.show();
-              console.log(res);
+              // console.log(res);
+              self.$message.success("更新成功", 5);
               // self.list = res.data;
             }
           }
         });
       }
     }
-    /*
-    save: function() {
-      let self = this;
-      self.loading = this.$message.loading("正在保存中……", 0);
-      setTimeout(function() {
-        self.loading;
-        self.$message.success("保存成功~", 1);
-      }, 1000);
-    }
-    */
   },
   mounted: function() {
     this.show();

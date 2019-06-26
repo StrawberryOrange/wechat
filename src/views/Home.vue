@@ -49,34 +49,6 @@
         </a-layout-content>
       </a-layout>
     </a-layout>
-
-    <!-- 注册弹出窗体 -->
-    <a-modal title="用户注册" onOk="regSubmit" :visible="regVisible">
-      <template slot="footer">
-        <!-- <a-button key="back" @click="handleCancel">Return</a-button> -->
-        <a-button key="submit" type="primary" :loading="regloading" @click="regSubmit">注册</a-button>
-      </template>
-      <a-input placeholder="请输入lastname" v-model="regUserId" style="margin:10px 0;">
-        <a-icon slot="prefix" type="bulb"/>
-        <a-icon v-if="regUserId" slot="suffix" type="close-circle" @click="empty('reg',1)"/>
-      </a-input>
-      <a-input placeholder="请输入用户名" v-model="regUsername" style="margin:10px 0;">
-        <a-icon slot="prefix" type="user"/>
-        <a-icon v-if="regUsername" slot="suffix" type="close-circle" @click="empty('reg',2)"/>
-      </a-input>
-      <a-input placeholder="请输入密码" v-model="regPassword" type="password" style="margin:10px 0;">
-        <a-icon slot="prefix" type="key"/>
-        <a-icon v-if="regPassword" slot="suffix" type="close-circle" @click="empty('reg',3)"/>
-      </a-input>
-      <!-- <a-input placeholder="请确认密码" v-model="regPassword2" type="password" style="margin:10px 0;">
-        <a-icon slot="prefix" type="key"/>
-        <a-icon v-if="regPassword2" slot="suffix" type="close-circle" @click="empty('reg',4)"/>
-      </a-input>
-      <a-input placeholder="请输入用户邮箱" v-model="regEmail" style="margin:10px 0;">
-        <a-icon slot="prefix" type="mail"/>
-        <a-icon v-if="regEmail" slot="suffix" type="close-circle" @click="empty('reg',5)"/>
-      </a-input>-->
-    </a-modal>
   </div>
 </template>
 
@@ -97,14 +69,7 @@ export default {
       logVisible: false,
       logloading: false,
       regVisible: false,
-      regloading: false,
-
-      // 注册用户名，id，密码……
-      regUserId: "",
-      regUsername: "",
-      regPassword: "",
-      regPassword2: "",
-      regEmail: ""
+      regloading: false
     };
   },
   components: {
@@ -126,97 +91,11 @@ export default {
         }
       });
     },
-    empty: function(foo, bar) {
-      if (foo == "log") {
-        switch (bar) {
-          case 1:
-            this.logUsername = "";
-            break;
-          case 2:
-            this.logPassword = "";
-            break;
-        }
-      }
-      if (foo == "reg") {
-        switch (bar) {
-          case 1:
-            this.regUserId = "";
-            break;
-          case 2:
-            this.regUsername = "";
-            break;
-          case 3:
-            this.regPassword = "";
-            break;
-          case 4:
-            this.regPassword2 = "";
-            break;
-          case 5:
-            this.regEmail = "";
-            break;
-        }
-      }
-    },
     showReg: function() {
-      this.regVisible = true;
-    },
-    regSubmit: function(e) {
-      this.regloading = true;
-
-      var self = this;
-      this.ajax({
-        url: self.store.INTERFACE.REGISTER,
-        method: "POST",
-        headers: {
-          "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
-        },
-        data: {
-          username: self.regUsername,
-          password: self.regPassword,
-          last_name: self.regUserId
-        },
-        success: function(res) {
-          if (res.code == 200) {
-            self.$message.info("注册成功，请登录", 5);
-          }
-          // console.log("zhucechengong");
-          // console.log(res);
-        }
-      });
-
-      // setTimeout(() => {
-      //   this.regVisible = false;
-      //   this.regloading = false;
-      // }, 1000);
-    },
-    logSubmit: function(e) {
-      this.logloading = true;
-      var self = this;
-      this.ajax({
-        url: self.store.INTERFACE.LOGIN,
-        method: "POST",
-        // headers: {
-        //   "Content-Type": "application/x-www-form-urlencode; charset=utf-8;"
-        // },
-        data: {
-          username: self.logUsername,
-          password: self.logPassword,
-          reply: {
-            苹果: "橘子",
-            樱桃: "西柚"
-          }
-        },
-        success: function(res) {
-          if (res.code == 200) {
-            self.isLogin = true;
-            // // console.log(res.headers["set-cookie"]);
-            // let allCookies = document.cookie;
-            // console.log(allCookies);
-            self.handleCancel();
-            // setTimeout(() => {
-            // self.getUserInfo();
-            // }, 200);
-          }
+      this.$router.push({
+        name: "account",
+        params: {
+          status: "register"
         }
       });
     },
@@ -250,7 +129,7 @@ export default {
     } else {
       this.isLogin = false;
     }
-    console.log("qaq");
+    // console.log("qaq");
   }
 };
 </script>

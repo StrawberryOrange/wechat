@@ -8,7 +8,7 @@
 </script>
 
 <style>
-@import url("//at.alicdn.com/t/font_1217929_3hyf9d2dwgm.css");
+@import url("//at.alicdn.com/t/font_1217929_c8vb4ug0c65.css");
 #components-layout-demo-custom-trigger .trigger {
   font-size: 18px;
   line-height: 64px;

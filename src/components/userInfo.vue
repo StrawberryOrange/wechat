@@ -128,7 +128,7 @@ export default {
   },
   methods: {
     setInfo: function() {
-      this.$message.info("还没做好呢，急毛线");
+      this.$message.info("正在开发中");
     },
     getUserInfo: function() {
       var self = this;
@@ -136,6 +136,7 @@ export default {
         url: self.store.INTERFACE.ACCOUNT_PROFILE,
         method: "GET",
         success: function(res) {
+          self.userInfo.wechatid = res.wechatname;
           if (res.code == 200) {
             console.log(res);
           }

@@ -39,7 +39,7 @@
           </div>
         </a-layout-header>
         <a-layout-content
-          :style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: '280px' }"
+          v-bind:style="{ margin: '24px 16px', padding: '24px', background: '#fff', minHeight: Height + 'px' }"
         >
           <!-- <router-view/> -->
           <userInfo v-if="showKey == 'index' && isLogin"/>
@@ -70,6 +70,7 @@ export default {
       logloading: false,
       regVisible: false,
       regloading: false
+      // Height: document.body.clientHeight - 64 - 48 - 1
     };
   },
   components: {
@@ -77,6 +78,11 @@ export default {
     userInfo,
     reply,
     wechatLogin
+  },
+  computed: {
+    Height: function() {
+      return document.body.clientHeight - 64 - 48 - 1;
+    }
   },
   methods: {
     chooseIndex: function(item) {
@@ -129,7 +135,7 @@ export default {
     } else {
       this.isLogin = false;
     }
-    // console.log("qaq");
+    console.log(this.Height);
   }
 };
 </script>

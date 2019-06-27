@@ -6,7 +6,7 @@
     </div>
     <div v-if="status=='fail'">
       <i class="iconfont icon-tupianjiazaishibai" style="font-size:68px;color:rgba(0,0,0,0.2)"></i>
-      <div class="top-margin">加载失败咯</div>
+      <div class="top-margin">加载失败咯,请刷新重试</div>
     </div>
     <div v-if="status=='success'">
       <a-popover title placement="top">

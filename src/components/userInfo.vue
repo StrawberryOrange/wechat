@@ -136,9 +136,10 @@ export default {
         url: self.store.INTERFACE.ACCOUNT_PROFILE,
         method: "GET",
         success: function(res) {
-          self.userInfo.wechatid = res.wechatname;
           if (res.code == 200) {
             console.log(res);
+            self.userInfo.id = res.data.user_id;
+            self.userInfo.wechatid = res.data.wechatname;
           }
         }
       });
